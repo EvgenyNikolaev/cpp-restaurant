@@ -26,6 +26,8 @@ namespace service {
 
     class Navigator {
     private:
+        const int windowWidth = 100;
+
         std::vector<Screen *> *stack;
 
         void displayCommandPrompt(Screen *screen);

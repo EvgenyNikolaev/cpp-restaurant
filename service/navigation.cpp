@@ -19,7 +19,7 @@ namespace service {
         system("cls");
 
         std::cout << "Window: " << screen->getName() << std::endl;
-        std::cout << std::string(100, '-') << std::endl;
+        std::cout << std::string(windowWidth, '-') << std::endl;
 
         screen->display();
         displayCommandPrompt(screen);
@@ -36,7 +36,7 @@ namespace service {
 
     void Navigator::displayCommandPrompt(Screen *screen) {
         std::cout << std::endl;
-        std::cout << std::string(100, '-') << std::endl;
+        std::cout << std::string(windowWidth, '-') << std::endl;
         std::cout << "| ";
         for (auto command: *screen->getCommands()) {
             std::cout << command->description->c_str() << " | ";
@@ -48,7 +48,7 @@ namespace service {
         }
 
         std::cout << " |" << std::endl;
-        std::cout << std::string(100, '-') << std::endl;
+        std::cout << std::string(windowWidth, '-') << std::endl;
         std::string commandInput;
         std::cin >> commandInput;
 
