@@ -16,6 +16,8 @@ namespace screen {
 
         bool handleCommandInput(std::string input) override;
 
+        std::string getName() override;
+
         static void printOrdersList(std::vector<Order *> *pVector);
     };
 }

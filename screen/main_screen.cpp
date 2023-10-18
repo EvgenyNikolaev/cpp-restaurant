@@ -1,3 +1,4 @@
+#include <iostream>
 #include "main_screen.h"
 #include "orders_list_screen.h"
 #include "menu_items_screen.h"
@@ -6,7 +7,7 @@ using namespace service;
 
 namespace screen {
     void MainScreen::display() {
-
+        std::cout << "Welcome!" << std::endl;
     }
 
     bool MainScreen::handleCommandInput(std::string input) {
@@ -26,5 +27,9 @@ namespace screen {
         commands->push_back(new Command(new std::string("Review menu items [menu]")));
         commands->push_back(new Command(new std::string("Review orders [orders]")));
         return commands;
+    }
+
+    std::string MainScreen::getName() {
+        return std::string("Main screen");
     }
 }

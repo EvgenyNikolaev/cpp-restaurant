@@ -30,4 +30,8 @@ namespace screen {
     bool CreateOrderScreen::handleCommandInput(std::string input) {
         return false;
     }
+
+    std::string CreateOrderScreen::getName() {
+        return std::string("Ceate order");
+    }
 }

@@ -13,6 +13,8 @@ namespace screen {
         std::vector<Command *> *getCommands() override;
 
         bool handleCommandInput(std::string input) override;
+
+        std::string getName() override;
     };
 
 }

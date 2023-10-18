@@ -11,9 +11,15 @@ namespace service {
         return instance;
     }
 
-    void Navigator::navigate(Screen *screen) {
+    void Navigator::navigate(Screen *screen, bool replace) {
+        if (replace) {
+            stack->pop_back();
+        }
         stack->push_back(screen);
         system("cls");
+
+        std::cout << "Window: " << screen->getName() << std::endl;
+        std::cout << std::string(100, '-') << std::endl;
 
         screen->display();
         displayCommandPrompt(screen);
@@ -29,17 +35,20 @@ namespace service {
     }
 
     void Navigator::displayCommandPrompt(Screen *screen) {
-        std::cout << "Available operations:\n";
+        std::cout << std::endl;
+        std::cout << std::string(100, '-') << std::endl;
+        std::cout << "| ";
         for (auto command: *screen->getCommands()) {
-            std::cout << command->description->c_str() << ", ";
+            std::cout << command->description->c_str() << " | ";
         }
         if (stack->size() == 1) {
-            std::cout << "Exit (e)";
+            std::cout << "Exit [exit]";
         } else {
-            std::cout << "Go back (b)";
+            std::cout << "Go back [back]";
         }
 
-        std::cout << std::endl;
+        std::cout << " |" << std::endl;
+        std::cout << std::string(100, '-') << std::endl;
         std::string commandInput;
         std::cin >> commandInput;
 

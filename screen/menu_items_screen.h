@@ -13,11 +13,15 @@ namespace screen {
 
         bool handleCommandInput(std::string input) override;
 
+        std::string getName() override;
+
         void printList();
 
         void addMenuItem();
 
         void deleteMenuItem();
+
+        void editMenuItem();
     };
 }
 

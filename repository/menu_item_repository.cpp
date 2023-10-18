@@ -24,7 +24,7 @@ namespace repository {
 
     void MenuItemRepository::store() {
         std::ofstream newFile("menuItems.bin", std::ios::binary);
-        newFile.write((char *) &idAutoincrement, sizeof (unsigned long int));
+        newFile.write((char *) &idAutoincrement, sizeof(unsigned long int));
         for (auto menuItem: *menuItems) {
             newFile.write((char *) menuItem, sizeof(MenuItem));
         }
@@ -42,7 +42,7 @@ namespace repository {
             std::cerr << "Error opening file." << std::endl;
         }
 
-        if (file.read((char *) &idAutoincrement, sizeof (unsigned long int))) {
+        if (file.read((char *) &idAutoincrement, sizeof(unsigned long int))) {
             auto menuItem = new MenuItem();
             while (file.read((char *) menuItem, sizeof(MenuItem))) {
                 menuItems->push_back(menuItem);
@@ -57,6 +57,29 @@ namespace repository {
         menuItem->id = ++idAutoincrement;
         menuItems->push_back(menuItem);
         store();
+    }
+
+    bool MenuItemRepository::deleteById(unsigned long id) {
+
+        for (auto i = 0; i < menuItems->size(); i++) {
+            if (menuItems->at(i)->id == id) {
+                menuItems->erase(menuItems->begin() + i);
+                store();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    MenuItem *MenuItemRepository::getById(unsigned long id) {
+        for (auto i = 0; i < menuItems->size(); i++) {
+            if (menuItems->at(i)->id == id) {
+                return menuItems->at(i);
+            }
+        }
+
+        return nullptr;
     }
 }
 

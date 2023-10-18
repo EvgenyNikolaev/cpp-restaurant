@@ -13,6 +13,8 @@ namespace service {
         virtual std::vector<Command *> *getCommands();
 
         virtual bool handleCommandInput(std::string input) = 0;
+
+        virtual std::string getName() = 0;
     };
 
     struct Command {
@@ -36,7 +38,7 @@ namespace service {
 
         static Navigator *getInstance();
 
-        void navigate(Screen *screen);
+        void navigate(Screen *screen, bool replace = false);
 
         void goBack();
     };

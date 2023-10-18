@@ -26,6 +26,10 @@ namespace repository {
 
         void add(MenuItem *menuItem);
 
+        bool deleteById(unsigned long int id);
+
+        MenuItem *getById(unsigned long int id);
+
         void store();
     };
 }

@@ -40,4 +40,8 @@ namespace screen {
 
         return handled;
     }
+
+    std::string OrdersListScreen::getName() {
+        return std::string("Orders");
+    }
 }
