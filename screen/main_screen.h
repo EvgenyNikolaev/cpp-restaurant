@@ -6,14 +6,15 @@
 using namespace service;
 
 namespace screen {
-    struct MainScreen : Screen {
+    class MainScreen : public Screen {
+    public:
         void display() override;
 
         std::vector<Command *> *getCommands() override;
 
         bool handleCommandInput(std::string input) override;
 
-        virtual std::string getName() override;
+        std::string getName() override;
     };
 }
 

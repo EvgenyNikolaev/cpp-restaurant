@@ -6,7 +6,8 @@
 using namespace service;
 
 namespace screen {
-    struct MenuItemsScreen : Screen {
+    class MenuItemsScreen : public Screen {
+    public:
         void display() override;
 
         std::vector<Command *> *getCommands() override;
@@ -14,6 +15,8 @@ namespace screen {
         bool handleCommandInput(std::string input) override;
 
         std::string getName() override;
+
+    private:
 
         void printList();
 

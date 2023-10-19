@@ -27,6 +27,9 @@ namespace repository {
         void add(Order *order);
 
         void store();
+
+        Order *getById(unsigned long int id);
+
     };
 }
 

@@ -1,10 +1,12 @@
 #include "menu_items_screen.h"
 #include "../repository/menu_item_repository.h"
+#include "../helper/view_helper.h"
 #include <iostream>
 
 using namespace service;
 using namespace repository;
 using namespace model;
+using namespace helper;
 
 namespace screen {
     void MenuItemsScreen::display() {
@@ -35,13 +37,12 @@ namespace screen {
     }
 
     void MenuItemsScreen::printList() {
+
+        printf("|%8s|%32s|%8s|", "id", "name", "price");
+        ViewHelper::printHorizontalRule();
         auto menuItems = MenuItemRepository::getInstance()->getAll();
         for (auto menuItem: *menuItems) {
-            std::cout << printf("|%8lu|%32s|%8u|",
-                                menuItem->id,
-                                menuItem->name,
-                                menuItem->priceInCents) << std::endl;
-
+            printf("|%8lu|%32s|%8u|\n", menuItem->id, menuItem->name, menuItem->priceInCents);
         }
     }
 

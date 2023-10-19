@@ -23,13 +23,13 @@ namespace repository {
     }
 
     void MenuItemRepository::store() {
-        std::ofstream newFile("menuItems.bin", std::ios::binary);
-        newFile.write((char *) &idAutoincrement, sizeof(unsigned long int));
+        std::ofstream file("menuItems.bin", std::ios::binary);
+        file.write((char *) &idAutoincrement, sizeof(unsigned long int));
         for (auto menuItem: *menuItems) {
-            newFile.write((char *) menuItem, sizeof(MenuItem));
+            file.write((char *) menuItem, sizeof(MenuItem));
         }
 
-        newFile.close();
+        file.close();
     }
 
     void MenuItemRepository::load() {
@@ -73,9 +73,9 @@ namespace repository {
     }
 
     MenuItem *MenuItemRepository::getById(unsigned long id) {
-        for (auto i = 0; i < menuItems->size(); i++) {
-            if (menuItems->at(i)->id == id) {
-                return menuItems->at(i);
+        for (auto &menuItem: *menuItems) {
+            if (menuItem->id == id) {
+                return menuItem;
             }
         }
 

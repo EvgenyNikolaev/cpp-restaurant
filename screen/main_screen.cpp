@@ -7,7 +7,7 @@ using namespace service;
 
 namespace screen {
     void MainScreen::display() {
-        std::cout << "Welcome!" << std::endl;
+        std::cout << "Welcome!";
     }
 
     bool MainScreen::handleCommandInput(std::string input) {
@@ -30,6 +30,6 @@ namespace screen {
     }
 
     std::string MainScreen::getName() {
-        return std::string("Main screen");
+        return "Main screen";
     }
 }

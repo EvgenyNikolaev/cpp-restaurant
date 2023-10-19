@@ -1,5 +1,8 @@
 #include <iostream>
 #include "navigation.h"
+#include "../helper/view_helper.h"
+
+using namespace helper;
 
 namespace service {
     Navigator *Navigator::instance = nullptr;
@@ -16,13 +19,7 @@ namespace service {
             stack->pop_back();
         }
         stack->push_back(screen);
-        system("cls");
-
-        std::cout << "Window: " << screen->getName() << std::endl;
-        std::cout << std::string(windowWidth, '-') << std::endl;
-
-        screen->display();
-        displayCommandPrompt(screen);
+        putScreenOnStage(screen);
     }
 
     void Navigator::goBack() {
@@ -31,13 +28,11 @@ namespace service {
         }
         stack->pop_back();
         auto screen = stack->at(stack->size() - 1);
-        navigate(screen);
+        putScreenOnStage(screen);
     }
 
     void Navigator::displayCommandPrompt(Screen *screen) {
-        std::cout << std::endl;
-        std::cout << std::string(windowWidth, '-') << std::endl;
-        std::cout << "| ";
+        ViewHelper::printHorizontalRule();
         for (auto command: *screen->getCommands()) {
             std::cout << command->description->c_str() << " | ";
         }
@@ -46,13 +41,11 @@ namespace service {
         } else {
             std::cout << "Go back [back]";
         }
-
-        std::cout << " |" << std::endl;
-        std::cout << std::string(windowWidth, '-') << std::endl;
+        ViewHelper::printHorizontalRule();
         std::string commandInput;
         std::cin >> commandInput;
 
-        if (commandInput == "b" || commandInput == "e") {
+        if (commandInput == "back" || commandInput == "exit") {
             goBack();
             return;
         }
@@ -61,12 +54,22 @@ namespace service {
             return;
         }
 
-        std::cout << "Incorrect operation. Please try again\n";
+        std::cout << "Incorrect operation. Please try again";
         displayCommandPrompt(screen);
     }
 
     Navigator::Navigator() {
         stack = new std::vector<Screen *>();
+    }
+
+    void Navigator::putScreenOnStage(Screen *screen) {
+        system("cls");
+
+        std::cout << "Window: " << screen->getName();
+        ViewHelper::printHorizontalRule();
+
+        screen->display();
+        displayCommandPrompt(screen);
     }
 
     Command::Command(std::string *description) : description(description) {

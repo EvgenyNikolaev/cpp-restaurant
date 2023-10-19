@@ -15,8 +15,10 @@ add_executable(restaraunt main.cpp
         model/menu_item.h
         model/order_menu_item.h
         model/order.h
-        screen/create_order_screen.cpp
-        screen/create_order_screen.h
+        screen/order_screen.cpp
+        screen/order_screen.h
         screen/menu_items_screen.cpp
         repository/menu_item_repository.cpp
+        helper/view_helper.h
+        helper/view_helper.cpp
 )

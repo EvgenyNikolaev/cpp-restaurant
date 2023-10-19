@@ -7,7 +7,8 @@
 namespace service {
     struct Command;
 
-    struct Screen {
+    class Screen {
+    public:
         virtual void display() = 0;
 
         virtual std::vector<Command *> *getCommands();
@@ -26,7 +27,6 @@ namespace service {
 
     class Navigator {
     private:
-        const int windowWidth = 100;
 
         std::vector<Screen *> *stack;
 
@@ -38,11 +38,15 @@ namespace service {
     public:
         Navigator();
 
+        static const int windowWidth = 100;
+
         static Navigator *getInstance();
 
         void navigate(Screen *screen, bool replace = false);
 
         void goBack();
+
+        void putScreenOnStage(Screen *screen);
     };
 
 }

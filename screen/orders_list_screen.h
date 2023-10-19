@@ -8,7 +8,8 @@
 using namespace service;
 
 namespace screen {
-    struct OrdersListScreen : Screen {
+    class OrdersListScreen : public Screen {
+    public:
 
         void display() override;
 
@@ -18,7 +19,13 @@ namespace screen {
 
         std::string getName() override;
 
+    private:
+
         static void printOrdersList(std::vector<Order *> *pVector);
+
+        void createNewOrder();
+
+        void viewOrder();
     };
 }
 
