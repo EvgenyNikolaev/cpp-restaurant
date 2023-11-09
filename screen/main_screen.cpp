@@ -4,6 +4,7 @@
 #include "menu_items_screen.h"
 
 using namespace service;
+using namespace repository;
 
 namespace screen {
     void MainScreen::display() {
@@ -15,7 +16,8 @@ namespace screen {
             Navigator::getInstance()->navigate(new MenuItemsScreen());
             return true;
         } else if (input == "orders") {
-            Navigator::getInstance()->navigate(new OrdersListScreen());
+            auto orders = OrderRepository::getInstance()->getAll();
+            Navigator::getInstance()->navigate(new OrdersListScreen(orders, nullptr));
             return true;
         }
         return false;

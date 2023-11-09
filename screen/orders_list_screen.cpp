@@ -1,26 +1,38 @@
 #include "../repository/order_repository.h"
+#include "../repository/order_menu_item_repository.h"
+#include "../repository/menu_item_repository.h"
 #include "orders_list_screen.h"
 #include "order_screen.h"
 #include "../helper/view_helper.h"
+#include "../service/order_service.h"
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace repository;
 using namespace helper;
 
 namespace screen {
     void OrdersListScreen::display() {
-        auto orders = OrderRepository::getInstance()->getAll();
-        printOrdersList(orders);
+
+        if (searchBy != nullptr && searchBy->length() > 0) {
+            std::cout << "Search by: " << searchBy->c_str() << std::endl;
+        }
+
+        printOrdersList();
     }
 
     std::vector<Command *> *OrdersListScreen::getCommands() {
         auto commands = new std::vector<Command *>();
         commands->push_back(new Command(new std::string("New order [new]")));
         commands->push_back(new Command(new std::string("View order [view]")));
+        commands->push_back(new Command(new std::string("Filter [filter]")));
+        commands->push_back(new Command(new std::string("Search [search]")));
+        commands->push_back(new Command(new std::string("Reset [reset]")));
         return commands;
     }
 
-    void OrdersListScreen::printOrdersList(std::vector<Order *> *orders) {
+    void OrdersListScreen::printOrdersList() {
 
         printf("|%5s|%12s|%30s|%6s|", "id", "table", "created at", "paid");
         ViewHelper::printHorizontalRule();
@@ -38,6 +50,12 @@ namespace screen {
             return true;
         } else if (input == "view") {
             viewOrder();
+            return true;
+        } else if (input == "search") {
+            search();
+            return true;
+        } else if (input == "reset") {
+            reset();
             return true;
         }
 
@@ -71,5 +89,25 @@ namespace screen {
             return;
         }
         Navigator::getInstance()->navigate(new OrderScreen(order));
+    }
+
+    OrdersListScreen::OrdersListScreen(std::vector<Order *> *orders, std::string *searchBy) {
+        this->orders = orders;
+        this->searchBy = searchBy;
+    }
+
+    void OrdersListScreen::search() {
+
+        std::string searchTerm;
+        std::cout << "Search string: ";
+        std::cin >> searchTerm;
+
+        auto filteredOrders = OrderService::getInstance()->search(&searchTerm);
+        Navigator::getInstance()->navigate(new OrdersListScreen(filteredOrders, &searchTerm), true);
+    }
+
+    void OrdersListScreen::reset() {
+        auto allOrders = OrderRepository::getInstance()->getAll();
+        Navigator::getInstance()->navigate(new OrdersListScreen(allOrders, nullptr), true);
     }
 }

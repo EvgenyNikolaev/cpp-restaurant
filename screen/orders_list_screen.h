@@ -10,6 +10,7 @@ using namespace service;
 namespace screen {
     class OrdersListScreen : public Screen {
     public:
+        explicit OrdersListScreen(std::vector<Order *> *orders, std::string *searchBy);
 
         void display() override;
 
@@ -21,11 +22,18 @@ namespace screen {
 
     private:
 
-        static void printOrdersList(std::vector<Order *> *pVector);
+        void printOrdersList();
 
         void createNewOrder();
 
         void viewOrder();
+
+        void search();
+
+        void reset();
+
+        std::vector<Order *> *orders;
+        std::string *searchBy;
     };
 }
 
