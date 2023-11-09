@@ -3,6 +3,7 @@
 
 #include "../service/navigation.h"
 #include "../model/order.h"
+#include "../model/menu_item.h"
 
 using namespace service;
 using namespace model;
@@ -11,7 +12,7 @@ namespace screen {
 
     class OrderScreen : public Screen {
     public:
-        OrderScreen(Order *order);
+        explicit OrderScreen(Order *order);
 
         void display() override;
 
@@ -24,6 +25,16 @@ namespace screen {
     private:
 
         Order *order = nullptr;
+
+        void printOrderMenuItems();
+
+        void addOrderMenuItem();
+
+        void deleteOrderMenuItem();
+
+        void markOrderMenuItemServed();
+
+        void printMenuItemsOptions();
     };
 
 }
