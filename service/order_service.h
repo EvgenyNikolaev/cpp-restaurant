@@ -15,7 +15,9 @@ namespace service {
 
         unsigned int getOrderTotalPrice(Order *order);
 
-        std::vector<Order *> *search(std::string *searchBy);
+        std::vector<Order *> *search(std::vector<Order *> *orders, std::string *searchBy);
+
+        std::vector<Order *> *filterNotServed(std::vector<Order *> *orders);
 
     private:
         static OrderService *instance;

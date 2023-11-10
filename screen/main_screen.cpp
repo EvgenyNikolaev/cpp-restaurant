@@ -16,8 +16,7 @@ namespace screen {
             Navigator::getInstance()->navigate(new MenuItemsScreen());
             return true;
         } else if (input == "orders") {
-            auto orders = OrderRepository::getInstance()->getAll();
-            Navigator::getInstance()->navigate(new OrdersListScreen(orders, nullptr));
+            Navigator::getInstance()->navigate(new OrdersListScreen());
             return true;
         }
         return false;

@@ -26,7 +26,7 @@ namespace screen {
         auto commands = new std::vector<Command *>();
         commands->push_back(new Command(new std::string("New order [new]")));
         commands->push_back(new Command(new std::string("View order [view]")));
-        commands->push_back(new Command(new std::string("Filter [filter]")));
+        commands->push_back(new Command(new std::string("Filter not served [filter]")));
         commands->push_back(new Command(new std::string("Search [search]")));
         commands->push_back(new Command(new std::string("Reset [reset]")));
         return commands;
@@ -56,6 +56,9 @@ namespace screen {
             return true;
         } else if (input == "reset") {
             reset();
+            return true;
+        } else if (input == "filter") {
+            filter();
             return true;
         }
 
@@ -91,23 +94,37 @@ namespace screen {
         Navigator::getInstance()->navigate(new OrderScreen(order));
     }
 
-    OrdersListScreen::OrdersListScreen(std::vector<Order *> *orders, std::string *searchBy) {
-        this->orders = orders;
+    OrdersListScreen::OrdersListScreen(std::string *searchBy, bool filterNotServed) {
         this->searchBy = searchBy;
+        this->filterNotServed = filterNotServed;
+        setupList();
     }
 
     void OrdersListScreen::search() {
 
-        std::string searchTerm;
+        std::string newSearchBy;
         std::cout << "Search string: ";
-        std::cin >> searchTerm;
+        std::cin >> newSearchBy;
 
-        auto filteredOrders = OrderService::getInstance()->search(&searchTerm);
-        Navigator::getInstance()->navigate(new OrdersListScreen(filteredOrders, &searchTerm), true);
+        Navigator::getInstance()
+                ->navigate(new OrdersListScreen(&newSearchBy, this->filterNotServed), true);
     }
 
     void OrdersListScreen::reset() {
-        auto allOrders = OrderRepository::getInstance()->getAll();
-        Navigator::getInstance()->navigate(new OrdersListScreen(allOrders, nullptr), true);
+        Navigator::getInstance()->navigate(new OrdersListScreen(), true);
+    }
+
+    void OrdersListScreen::filter() {
+        Navigator::getInstance()->navigate(new OrdersListScreen(this->searchBy, true), true);
+    }
+
+    void OrdersListScreen::setupList() {
+        orders = OrderRepository::getInstance()->getAll();
+        if (this->filterNotServed) {
+            orders = OrderService::getInstance()->filterNotServed(orders);
+        }
+        if (this->searchBy) {
+            orders = OrderService::getInstance()->search(orders, searchBy);
+        }
     }
 }

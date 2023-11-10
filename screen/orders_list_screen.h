@@ -10,7 +10,7 @@ using namespace service;
 namespace screen {
     class OrdersListScreen : public Screen {
     public:
-        explicit OrdersListScreen(std::vector<Order *> *orders, std::string *searchBy);
+        explicit OrdersListScreen(std::string *searchBy = nullptr, bool filterNotServed = false);
 
         void display() override;
 
@@ -32,8 +32,13 @@ namespace screen {
 
         void reset();
 
+        void filter();
+
+        void setupList();
+
         std::vector<Order *> *orders;
-        std::string *searchBy;
+        std::string *searchBy = nullptr;
+        bool filterNotServed = false;
     };
 }
 

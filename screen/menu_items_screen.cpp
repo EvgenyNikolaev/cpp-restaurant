@@ -76,7 +76,7 @@ namespace screen {
     }
 
     std::string MenuItemsScreen::getName() {
-        return std::string("Menu items");
+        return "Menu items";
     }
 
     void MenuItemsScreen::editMenuItem() {

@@ -26,8 +26,7 @@ namespace service {
         return total;
     }
 
-    std::vector<Order *> *OrderService::search(std::string *searchBy) {
-        auto orders = OrderRepository::getInstance()->getAll();
+    std::vector<Order *> *OrderService::search(std::vector<Order *> *orders, std::string *searchBy) {
         auto result = new std::vector<Order *>();
         for (auto order: *orders) {
             auto found = false;
@@ -37,11 +36,31 @@ namespace service {
                 if (std::string(menuItem->name).find(*searchBy) != std::string::npos) {
                     result->push_back(order);
                     found = true;
-                    continue;
+                    break;
                 }
-                if (found) {
-                    continue;
+            }
+            if (found) {
+                break;
+            }
+        }
+        return result;
+    }
+
+    std::vector<Order *> *OrderService::filterNotServed(std::vector<Order *> *orders) {
+        auto result = new std::vector<Order *>();
+        for (auto order: *orders) {
+            auto found = false;
+            auto orderMenuItems = OrderMenuItemRepository::getInstance()
+                    ->getByOrderId(order->id);
+            for (auto orderMenuItem: *orderMenuItems) {
+                if (!orderMenuItem->isServed) {
+                    result->push_back(order);
+                    found = true;
+                    break;
                 }
+            }
+            if (found) {
+                break;
             }
         }
         return result;
