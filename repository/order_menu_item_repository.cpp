@@ -56,7 +56,7 @@ namespace repository {
     }
 
     OrderMenuItem *OrderMenuItemRepository::getById(unsigned long id) {
-        for (auto &orderMenuItem: *orderMenuItems) {
+        for (auto orderMenuItem: *orderMenuItems) {
             if (orderMenuItem->id == id) {
                 return orderMenuItem;
             }

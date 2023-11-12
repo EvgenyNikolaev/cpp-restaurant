@@ -38,7 +38,7 @@ namespace service {
     public:
         Navigator();
 
-        static const int windowWidth = 100;
+        static const int windowWidth = 120;
 
         static Navigator *getInstance();
 

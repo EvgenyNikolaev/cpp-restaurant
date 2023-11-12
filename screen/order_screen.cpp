@@ -15,9 +15,10 @@ using namespace helper;
 namespace screen {
     void OrderScreen::display() {
 
-        std::cout << "Order id: " << order->id << std::endl;
-        std::cout << "Table: " << order->table << std::endl;
-        std::cout << "Total: " << OrderService::getInstance()->getOrderTotalPrice(order);
+        auto totalPrice = ViewHelper::formatPrice(OrderService::getInstance()->getOrderTotalPrice(order));
+        ViewHelper::printProperty("Order id", std::to_string(order->id));
+        ViewHelper::printProperty("Table", order->table);
+        ViewHelper::printProperty("Total", totalPrice);
         printOrderMenuItems();
     }
 
@@ -56,12 +57,13 @@ namespace screen {
         ViewHelper::printHorizontalRule();
 
         auto orderMenuItems = OrderMenuItemRepository::getInstance()->getByOrderId(order->id);
-        printf("|%5s|%30s|%12s|%12s|%6s|\n", "id", "name", "qty", "price", "served");
-        for (const OrderMenuItem *orderMenuItem: *orderMenuItems) {
+        printf("|%5s|%79s|%12s|%12s|%6s|\n", "id", "name", "qty", "price", "served");
+        for (auto orderMenuItem: *orderMenuItems) {
             auto menuItem = MenuItemRepository::getInstance()->getById(orderMenuItem->menuItemId);
 
-            printf("|%5lu|%30s|%12u|%12u|%6s|\n", orderMenuItem->id, menuItem->name,
-                   orderMenuItem->qty, menuItem->priceInCents, orderMenuItem->isServed ? "yes" : "no");
+            printf("|%5lu|%79s|%12u|%12s|%6s|\n", orderMenuItem->id, menuItem->name,
+                   orderMenuItem->qty, ViewHelper::formatPrice(menuItem->priceInCents).c_str(),
+                   orderMenuItem->isServed ? "yes" : "no");
         }
     }
 
@@ -118,7 +120,7 @@ namespace screen {
         }
 
         orderMenuItem->isServed = true;
-        MenuItemRepository::getInstance()->store();
+        OrderMenuItemRepository::getInstance()->store();
         Navigator::getInstance()->navigate(new OrderScreen(order), true);
     }
 

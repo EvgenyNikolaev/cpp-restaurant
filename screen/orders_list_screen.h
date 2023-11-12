@@ -4,13 +4,16 @@
 #include <string>
 #include "../service/navigation.h"
 #include "../repository/order_repository.h"
+#include "../service/order_service.h"
 
 using namespace service;
 
 namespace screen {
     class OrdersListScreen : public Screen {
     public:
-        explicit OrdersListScreen(std::string *searchBy = nullptr, bool filterNotServed = false);
+        explicit OrdersListScreen(std::string *searchBy = nullptr,
+                                  FilterOption *filterBy = nullptr,
+                                  SortOption *sortBy = nullptr);
 
         void display() override;
 
@@ -34,11 +37,14 @@ namespace screen {
 
         void filter();
 
+        void sort();
+
         void setupList();
 
         std::vector<Order *> *orders;
         std::string *searchBy = nullptr;
-        bool filterNotServed = false;
+        FilterOption *filterBy = nullptr;
+        SortOption *sortBy = nullptr;
     };
 }
 

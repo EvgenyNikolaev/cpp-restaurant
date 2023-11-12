@@ -38,11 +38,12 @@ namespace screen {
 
     void MenuItemsScreen::printList() {
 
-        printf("|%8s|%32s|%8s|", "id", "name", "price");
+        printf("|%8s|%100s|%8s|", "id", "name", "price");
         ViewHelper::printHorizontalRule();
         auto menuItems = MenuItemRepository::getInstance()->getAll();
         for (auto menuItem: *menuItems) {
-            printf("|%8lu|%32s|%8u|\n", menuItem->id, menuItem->name, menuItem->priceInCents);
+            printf("|%8lu|%100s|%8s|\n", menuItem->id, menuItem->name,
+                   ViewHelper::formatPrice(menuItem->priceInCents).c_str());
         }
     }
 
