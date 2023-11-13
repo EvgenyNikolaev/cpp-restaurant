@@ -5,13 +5,14 @@
 #include <fstream>
 #include "../model/order.h"
 
+using namespace std;
 using namespace model;
 
 namespace repository {
     class OrderRepository {
     private:
         static OrderRepository *instance;
-        std::vector<Order *> *orders;
+        vector<Order *> *orders;
 
         void load();
 
@@ -22,7 +23,7 @@ namespace repository {
 
         static OrderRepository *getInstance();
 
-        std::vector<Order *> *getAll();
+        vector<Order *> *getAll();
 
         void add(Order *order);
 

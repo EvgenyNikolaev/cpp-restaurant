@@ -1,12 +1,14 @@
 #ifndef RESTARAUNT_VIEW_HELPER_H
 #define RESTARAUNT_VIEW_HELPER_H
 
+using namespace std;
+
 namespace helper {
     class ViewHelper {
     public:
         static void printHorizontalRule();
-        static std::string formatPrice(unsigned int priceInCents);
-        static void printProperty(std::string property, std::string value);
+        static string formatPrice(unsigned int priceInCents);
+        static void printProperty(string property, string value);
     };
 }
 

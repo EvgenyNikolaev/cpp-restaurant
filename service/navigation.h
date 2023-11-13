@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 namespace service {
     struct Command;
 
@@ -11,26 +13,26 @@ namespace service {
     public:
         virtual void display() = 0;
 
-        virtual std::vector<Command *> *getCommands();
+        virtual vector<Command *> *getCommands();
 
-        virtual bool handleCommandInput(std::string input) = 0;
+        virtual bool handleCommandInput(string input) = 0;
 
-        virtual std::string getName() = 0;
+        virtual string getName() = 0;
     };
 
     struct Command {
-        std::string *description;
-        const std::string *command;
+        string *description;
+        const string *command;
 
-        explicit Command(const std::string *command, std::string *description);
+        explicit Command(const string *command, string *description);
     };
 
     class Navigator {
     private:
-        constexpr static const std::string COMMAND_BACK = "back";
-        constexpr static const std::string COMMAND_EXIT = "exit";
+        constexpr static const string COMMAND_BACK = "back";
+        constexpr static const string COMMAND_EXIT = "exit";
 
-        std::vector<Screen *> *stack;
+        vector<Screen *> *stack;
 
         void displayCommandPrompt(Screen *screen);
 

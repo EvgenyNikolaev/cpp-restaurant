@@ -6,30 +6,31 @@
 #include "../repository/order_repository.h"
 #include "../service/order_service.h"
 
+using namespace std;
 using namespace service;
 
 namespace screen {
     class OrdersListScreen : public Screen {
     public:
-        explicit OrdersListScreen(std::string *searchBy = nullptr,
+        explicit OrdersListScreen(string *searchBy = nullptr,
                                   FilterOption *filterBy = nullptr,
                                   SortOption *sortBy = nullptr);
 
         void display() override;
 
-        std::vector<Command *> *getCommands() override;
+        vector<Command *> *getCommands() override;
 
-        bool handleCommandInput(std::string input) override;
+        bool handleCommandInput(string input) override;
 
-        std::string getName() override;
+        string getName() override;
 
     private:
-        constexpr static const std::string COMMAND_NEW = "new";
-        constexpr static const std::string COMMAND_VIEW = "view";
-        constexpr static const std::string COMMAND_FILTER = "filter";
-        constexpr static const std::string COMMAND_SORT = "sort";
-        constexpr static const std::string COMMAND_SEARCH = "search";
-        constexpr static const std::string COMMAND_RESET = "reset";
+        constexpr static const string COMMAND_NEW = "new";
+        constexpr static const string COMMAND_VIEW = "view";
+        constexpr static const string COMMAND_FILTER = "filter";
+        constexpr static const string COMMAND_SORT = "sort";
+        constexpr static const string COMMAND_SEARCH = "search";
+        constexpr static const string COMMAND_RESET = "reset";
 
 
         void printOrdersList();
@@ -48,8 +49,8 @@ namespace screen {
 
         void setupList();
 
-        std::vector<Order *> *orders;
-        std::string *searchBy = nullptr;
+        vector<Order *> *orders;
+        string *searchBy = nullptr;
         FilterOption *filterBy = nullptr;
         SortOption *sortBy = nullptr;
     };

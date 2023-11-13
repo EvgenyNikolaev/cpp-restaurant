@@ -13,7 +13,7 @@ namespace screen {
         printList();
     }
 
-    bool MenuItemsScreen::handleCommandInput(std::string input) {
+    bool MenuItemsScreen::handleCommandInput(string input) {
         if (input == COMMAND_ADD) {
             addMenuItem();
             return true;
@@ -27,12 +27,12 @@ namespace screen {
         return false;
     }
 
-    std::vector<Command *> *MenuItemsScreen::getCommands() {
+    vector<Command *> *MenuItemsScreen::getCommands() {
         auto commands = Screen::getCommands();
 
-        commands->push_back(new Command(&COMMAND_ADD, new std::string("Add")));
-        commands->push_back(new Command(&COMMAND_EDIT, new std::string("Edit")));
-        commands->push_back(new Command(&COMMAND_DELETE, new std::string("Delete")));
+        commands->push_back(new Command(&COMMAND_ADD, new string("Add")));
+        commands->push_back(new Command(&COMMAND_EDIT, new string("Edit")));
+        commands->push_back(new Command(&COMMAND_DELETE, new string("Delete")));
         return commands;
     }
 
@@ -50,12 +50,12 @@ namespace screen {
     void MenuItemsScreen::addMenuItem() {
         auto menuItem = new MenuItem();
 
-        std::cout << "Name: ";
-        std::cin.ignore();
-        std::cin.getline(menuItem->name, 32);
+        cout << "Name: ";
+        cin.ignore();
+        cin.getline(menuItem->name, 32);
 
-        std::cout << "Price in cents: ";
-        std::cin >> menuItem->priceInCents;
+        cout << "Price in cents: ";
+        cin >> menuItem->priceInCents;
 
         MenuItemRepository::getInstance()->add(menuItem);
         Navigator::getInstance()->navigate(new MenuItemsScreen(), true);
@@ -65,43 +65,43 @@ namespace screen {
 
         unsigned long int id;
 
-        std::cout << "Id: ";
-        std::cin >> id;
+        cout << "Id: ";
+        cin >> id;
 
         if (MenuItemRepository::getInstance()->deleteById(id)) {
             Navigator::getInstance()->navigate(new MenuItemsScreen(), true);
         } else {
-            std::cout << "Failed to delete. Please try again." << std::endl;
+            cout << "Failed to delete. Please try again." << endl;
             deleteMenuItem();
         }
 
     }
 
-    std::string MenuItemsScreen::getName() {
+    string MenuItemsScreen::getName() {
         return "Menu items";
     }
 
     void MenuItemsScreen::editMenuItem() {
         unsigned long int id;
 
-        std::cout << "Id: ";
-        std::cin >> id;
+        cout << "Id: ";
+        cin >> id;
 
         auto menuItem = MenuItemRepository::getInstance()->getById(id);
         if (menuItem == nullptr) {
-            std::cout << "Wrong id. Please try again." << std::endl;
+            cout << "Wrong id. Please try again." << endl;
             editMenuItem();
             return;
         }
 
-        std::cout << "Name (" << menuItem->name << "): ";
-        std::cin.ignore();
-        std::cin.getline(menuItem->name, 32);
-        std::cout << std::endl;
+        cout << "Name (" << menuItem->name << "): ";
+        cin.ignore();
+        cin.getline(menuItem->name, 32);
+        cout << endl;
 
-        std::cout << "Price (" << menuItem->priceInCents << "): ";
-        std::cin >> menuItem->priceInCents;
-        std::cout << std::endl;
+        cout << "Price (" << menuItem->priceInCents << "): ";
+        cin >> menuItem->priceInCents;
+        cout << endl;
 
         MenuItemRepository::getInstance()->store();
         Navigator::getInstance()->navigate(new MenuItemsScreen(), true);

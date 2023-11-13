@@ -3,6 +3,8 @@
 #include <fstream>
 #include <filesystem>
 
+using namespace std;
+
 namespace repository {
     OrderRepository *OrderRepository::instance;
 
@@ -13,17 +15,17 @@ namespace repository {
         return instance;
     }
 
-    std::vector<Order *> *OrderRepository::getAll() {
+    vector<Order *> *OrderRepository::getAll() {
         return orders;
     }
 
     OrderRepository::OrderRepository() {
-        orders = new std::vector<Order *>();
+        orders = new vector<Order *>();
         load();
     }
 
     void OrderRepository::store() {
-        std::ofstream file("orders.bin", std::ios::binary);
+        ofstream file("orders.bin", ios::binary);
         file.write((char *) &idAutoincrement, sizeof(unsigned long int));
         for (auto order: *orders) {
             file.write((char *) order, sizeof(Order));
@@ -33,13 +35,13 @@ namespace repository {
     }
 
     void OrderRepository::load() {
-        if (!std::filesystem::exists("orders.bin")) {
+        if (!filesystem::exists("orders.bin")) {
             return;
         }
 
-        std::ifstream file("orders.bin", std::ios::binary);
+        ifstream file("orders.bin", ios::binary);
         if (!file.is_open()) {
-            std::cerr << "Error opening file." << std::endl;
+            cerr << "Error opening file." << endl;
         }
 
         if (file.read((char *) &idAutoincrement, sizeof(unsigned long int))) {
@@ -55,8 +57,8 @@ namespace repository {
 
     void OrderRepository::add(Order *order) {
         order->id = ++idAutoincrement;
-        std::time_t t = std::time(nullptr);
-        order->createdAt = *std::localtime(&t);
+        time_t t = time(nullptr);
+        order->createdAt = *localtime(&t);
         orders->push_back(order);
         store();
     }

@@ -3,6 +3,7 @@
 
 #include "../service/navigation.h"
 
+using namespace std;
 using namespace service;
 
 namespace screen {
@@ -10,16 +11,16 @@ namespace screen {
     public:
         void display() override;
 
-        std::vector<Command *> *getCommands() override;
+        vector<Command *> *getCommands() override;
 
-        bool handleCommandInput(std::string input) override;
+        bool handleCommandInput(string input) override;
 
-        std::string getName() override;
+        string getName() override;
 
     private:
-        constexpr static const std::string COMMAND_ADD = "add";
-        constexpr static const std::string COMMAND_EDIT = "edit";
-        constexpr static const std::string COMMAND_DELETE = "delete";
+        constexpr static const string COMMAND_ADD = "add";
+        constexpr static const string COMMAND_EDIT = "edit";
+        constexpr static const string COMMAND_DELETE = "delete";
 
         void printList();
 

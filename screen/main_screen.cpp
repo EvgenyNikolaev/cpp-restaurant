@@ -3,15 +3,16 @@
 #include "orders_list_screen.h"
 #include "menu_items_screen.h"
 
+using namespace std;
 using namespace service;
 using namespace repository;
 
 namespace screen {
     void MainScreen::display() {
-        std::cout << "Welcome!";
+        cout << "Welcome!";
     }
 
-    bool MainScreen::handleCommandInput(std::string input) {
+    bool MainScreen::handleCommandInput(string input) {
         if (input == COMMAND_MENU) {
             Navigator::getInstance()->navigate(new MenuItemsScreen());
             return true;
@@ -22,15 +23,15 @@ namespace screen {
         return false;
     }
 
-    std::vector<Command *> *MainScreen::getCommands() {
+    vector<Command *> *MainScreen::getCommands() {
         auto commands = Screen::getCommands();
 
-        commands->push_back(new Command(&COMMAND_MENU, new std::string("Review menu items")));
-        commands->push_back(new Command(&COMMAND_ORDERS, new std::string("Review menu items")));
+        commands->push_back(new Command(&COMMAND_MENU, new string("Review menu items")));
+        commands->push_back(new Command(&COMMAND_ORDERS, new string("Review menu items")));
         return commands;
     }
 
-    std::string MainScreen::getName() {
+    string MainScreen::getName() {
         return "Main screen";
     }
 }

@@ -6,12 +6,13 @@
 #include "../model/menu_item.h"
 
 using namespace model;
+using namespace std;
 
 namespace repository {
     class MenuItemRepository {
     private:
         static MenuItemRepository *instance;
-        std::vector<MenuItem *> *menuItems;
+        vector<MenuItem *> *menuItems;
 
         void load();
 
@@ -22,7 +23,7 @@ namespace repository {
 
         static MenuItemRepository *getInstance();
 
-        std::vector<MenuItem *> *getAll();
+        vector<MenuItem *> *getAll();
 
         void add(MenuItem *menuItem);
 

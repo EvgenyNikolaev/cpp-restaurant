@@ -2,6 +2,7 @@
 #include "navigation.h"
 #include "../helper/view_helper.h"
 
+using namespace std;
 using namespace helper;
 
 namespace service {
@@ -34,16 +35,16 @@ namespace service {
     void Navigator::displayCommandPrompt(Screen *screen) {
         ViewHelper::printHorizontalRule();
         for (auto command: *screen->getCommands()) {
-            std::cout << command->description->c_str() << " [" << command->command->c_str() << "]" << " | ";
+            cout << command->description->c_str() << " [" << command->command->c_str() << "]" << " | ";
         }
         if (stack->size() == 1) {
-            std::cout << "Exit [" << COMMAND_EXIT << "]";
+            cout << "Exit [" << COMMAND_EXIT << "]";
         } else {
-            std::cout << "Go back [" << COMMAND_BACK << "]";
+            cout << "Go back [" << COMMAND_BACK << "]";
         }
         ViewHelper::printHorizontalRule();
-        std::string commandInput;
-        std::cin >> commandInput;
+        string commandInput;
+        cin >> commandInput;
 
         if (commandInput == COMMAND_BACK || commandInput == COMMAND_EXIT) {
             goBack();
@@ -54,31 +55,31 @@ namespace service {
             return;
         }
 
-        std::cout << "Incorrect operation. Please try again";
-        std::cin.ignore();
+        cout << "Incorrect operation. Please try again";
+        cin.ignore();
         displayCommandPrompt(screen);
     }
 
     Navigator::Navigator() {
-        stack = new std::vector<Screen *>();
+        stack = new vector<Screen *>();
     }
 
     void Navigator::putScreenOnStage(Screen *screen) {
         system("cls");
 
-        std::cout << "Window: " << screen->getName();
+        cout << "Window: " << screen->getName();
         ViewHelper::printHorizontalRule();
 
         screen->display();
         displayCommandPrompt(screen);
     }
 
-    Command::Command(const std::string *command, std::string *description) : description(description),
+    Command::Command(const string *command, string *description) : description(description),
                                                                              command(command) {
     }
 
-    std::vector<Command *> *Screen::getCommands() {
-        return new std::vector<Command *>();
+    vector<Command *> *Screen::getCommands() {
+        return new vector<Command *>();
     }
 
 }

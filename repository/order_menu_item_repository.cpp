@@ -3,6 +3,8 @@
 #include <fstream>
 #include <filesystem>
 
+using namespace std;
+
 namespace repository {
     OrderMenuItemRepository *OrderMenuItemRepository::instance;
 
@@ -14,12 +16,12 @@ namespace repository {
     }
 
     OrderMenuItemRepository::OrderMenuItemRepository() {
-        orderMenuItems = new std::vector<OrderMenuItem *>();
+        orderMenuItems = new vector<OrderMenuItem *>();
         load();
     }
 
     void OrderMenuItemRepository::store() {
-        std::ofstream file("orderMenuItems.bin", std::ios::binary);
+        ofstream file("orderMenuItems.bin", ios::binary);
         file.write((char *) &idAutoincrement, sizeof(unsigned long int));
         for (auto orderMenuItem: *orderMenuItems) {
             file.write((char *) orderMenuItem, sizeof(OrderMenuItem));
@@ -29,13 +31,13 @@ namespace repository {
     }
 
     void OrderMenuItemRepository::load() {
-        if (!std::filesystem::exists("orderMenuItems.bin")) {
+        if (!filesystem::exists("orderMenuItems.bin")) {
             return;
         }
 
-        std::ifstream file("orderMenuItems.bin", std::ios::binary);
+        ifstream file("orderMenuItems.bin", ios::binary);
         if (!file.is_open()) {
-            std::cerr << "Error opening file." << std::endl;
+            cerr << "Error opening file." << endl;
         }
 
         if (file.read((char *) &idAutoincrement, sizeof(unsigned long int))) {
@@ -65,8 +67,8 @@ namespace repository {
         return nullptr;
     }
 
-    std::vector<OrderMenuItem *> *OrderMenuItemRepository::getByOrderId(unsigned long orderId) {
-        auto filteredVector = new std::vector<OrderMenuItem *>();
+    vector<OrderMenuItem *> *OrderMenuItemRepository::getByOrderId(unsigned long orderId) {
+        auto filteredVector = new vector<OrderMenuItem *>();
         for (auto orderMenuItem: *orderMenuItems) {
             if (orderMenuItem->orderId == orderId) {
                 filteredVector->push_back(orderMenuItem);

@@ -2,6 +2,7 @@
 #include "../repository/order_menu_item_repository.h"
 #include "../repository/menu_item_repository.h"
 
+using namespace std;
 using namespace repository;
 using namespace model;
 
@@ -25,13 +26,13 @@ namespace service {
         return total;
     }
 
-    std::vector<Order *> *OrderService::search(std::vector<Order *> *orders, std::string *searchBy) {
-        auto result = new std::vector<Order *>();
+    vector<Order *> *OrderService::search(vector<Order *> *orders, string *searchBy) {
+        auto result = new vector<Order *>();
         for (auto order: *orders) {
             auto orderMenuItems = OrderMenuItemRepository::getInstance()->getByOrderId(order->id);
             for (auto orderMenuItem: *orderMenuItems) {
                 auto menuItem = MenuItemRepository::getInstance()->getById(orderMenuItem->menuItemId);
-                if (std::string(menuItem->name).find(*searchBy) != std::string::npos) {
+                if (string(menuItem->name).find(*searchBy) != string::npos) {
                     result->push_back(order);
                     break;
                 }
@@ -40,8 +41,8 @@ namespace service {
         return result;
     }
 
-    std::vector<Order *> *OrderService::filter(std::vector<Order *> *orders, FilterOption *filterOptions) {
-        auto result = new std::vector<Order *>();
+    vector<Order *> *OrderService::filter(vector<Order *> *orders, FilterOption *filterOptions) {
+        auto result = new vector<Order *>();
         if (filterOptions == nullptr) {
             return result;
         }
@@ -58,8 +59,8 @@ namespace service {
         return result;
     }
 
-    std::vector<Order *> *OrderService::sort(std::vector<Order *> *orders, SortOption *sortOptions) {
-        auto result = new std::vector<Order *>();
+    vector<Order *> *OrderService::sort(vector<Order *> *orders, SortOption *sortOptions) {
+        auto result = new vector<Order *>();
         if (sortOptions == nullptr) {
             return result;
         }
@@ -100,13 +101,13 @@ namespace service {
         return true;
     }
 
-    std::string OrderService::getDescription(Order *order) {
+    string OrderService::getDescription(Order *order) {
         auto orderMenuItems = OrderMenuItemRepository::getInstance()->getByOrderId(order->id);
-        std::string description;
+        string description;
         for (auto i = 0; i < orderMenuItems->size(); i++) {
             auto orderMenuItem = orderMenuItems->at(i);
             auto menuItem = MenuItemRepository::getInstance()->getById(orderMenuItem->menuItemId);
-            description += std::string(menuItem->name);
+            description += string(menuItem->name);
 
             if (i + 1 < orderMenuItems->size()) {
                 description += ", ";

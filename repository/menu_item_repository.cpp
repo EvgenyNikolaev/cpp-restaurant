@@ -3,6 +3,8 @@
 #include <fstream>
 #include <filesystem>
 
+using namespace std;
+
 namespace repository {
     MenuItemRepository *MenuItemRepository::instance;
 
@@ -13,17 +15,17 @@ namespace repository {
         return instance;
     }
 
-    std::vector<MenuItem *> *MenuItemRepository::getAll() {
+    vector<MenuItem *> *MenuItemRepository::getAll() {
         return menuItems;
     }
 
     MenuItemRepository::MenuItemRepository() {
-        menuItems = new std::vector<MenuItem *>();
+        menuItems = new vector<MenuItem *>();
         load();
     }
 
     void MenuItemRepository::store() {
-        std::ofstream file("menuItems.bin", std::ios::binary);
+        ofstream file("menuItems.bin", ios::binary);
         file.write((char *) &idAutoincrement, sizeof(unsigned long int));
         for (auto menuItem: *menuItems) {
             file.write((char *) menuItem, sizeof(MenuItem));
@@ -33,13 +35,13 @@ namespace repository {
     }
 
     void MenuItemRepository::load() {
-        if (!std::filesystem::exists("menuItems.bin")) {
+        if (!filesystem::exists("menuItems.bin")) {
             return;
         }
 
-        std::ifstream file("menuItems.bin", std::ios::binary);
+        ifstream file("menuItems.bin", ios::binary);
         if (!file.is_open()) {
-            std::cerr << "Error opening file." << std::endl;
+            cerr << "Error opening file." << endl;
         }
 
         if (file.read((char *) &idAutoincrement, sizeof(unsigned long int))) {

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+using namespace std;
 using namespace model;
 
 namespace service {
@@ -24,13 +25,13 @@ namespace service {
         unsigned int getOrderTotalPrice(Order *order);
 
         bool getIsFullyServed(Order *order);
-        std::string getDescription(Order *order);
+        string getDescription(Order *order);
 
-        std::vector<Order *> *search(std::vector<Order *> *orders, std::string *searchBy);
+        vector<Order *> *search(vector<Order *> *orders, string *searchBy);
 
-        std::vector<Order *> *filter(std::vector<Order *> *orders, FilterOption *filterOptions);
+        vector<Order *> *filter(vector<Order *> *orders, FilterOption *filterOptions);
 
-        std::vector<Order *> *sort(std::vector<Order *> *orders, SortOption *sortOptions);
+        vector<Order *> *sort(vector<Order *> *orders, SortOption *sortOptions);
 
     private:
         static OrderService *instance;

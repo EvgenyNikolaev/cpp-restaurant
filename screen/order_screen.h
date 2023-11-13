@@ -5,6 +5,7 @@
 #include "../model/order.h"
 #include "../model/menu_item.h"
 
+using namespace std;
 using namespace service;
 using namespace model;
 
@@ -17,16 +18,16 @@ namespace screen {
 
         void display() override;
 
-        std::vector<Command *> *getCommands() override;
+        vector<Command *> *getCommands() override;
 
-        bool handleCommandInput(std::string input) override;
+        bool handleCommandInput(string input) override;
 
-        std::string getName() override;
+        string getName() override;
 
     private:
-        constexpr static const std::string COMMAND_ADD = "add";
-        constexpr static const std::string COMMAND_REMOVE = "remove";
-        constexpr static const std::string COMMAND_SERVE = "serve";
+        constexpr static const string COMMAND_ADD = "add";
+        constexpr static const string COMMAND_REMOVE = "remove";
+        constexpr static const string COMMAND_SERVE = "serve";
 
         Order *order = nullptr;
 

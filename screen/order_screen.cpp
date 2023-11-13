@@ -5,6 +5,7 @@
 #include "../helper/view_helper.h"
 #include "../service/order_service.h"
 
+using namespace std;
 using namespace model;
 using namespace repository;
 using namespace service;
@@ -14,21 +15,21 @@ namespace screen {
     void OrderScreen::display() {
 
         auto totalPrice = ViewHelper::formatPrice(OrderService::getInstance()->getOrderTotalPrice(order));
-        ViewHelper::printProperty("Order id", std::to_string(order->id));
+        ViewHelper::printProperty("Order id", to_string(order->id));
         ViewHelper::printProperty("Table", order->table);
         ViewHelper::printProperty("Total", totalPrice);
         printOrderMenuItems();
     }
 
-    std::vector<Command *> *OrderScreen::getCommands() {
-        auto commands = new std::vector<Command *>();
-        commands->push_back(new Command(&COMMAND_ADD, new std::string("Add item")));
-        commands->push_back(new Command(&COMMAND_REMOVE, new std::string("Remove item")));
-        commands->push_back(new Command(&COMMAND_SERVE, new std::string("Mark served")));
+    vector<Command *> *OrderScreen::getCommands() {
+        auto commands = new vector<Command *>();
+        commands->push_back(new Command(&COMMAND_ADD, new string("Add item")));
+        commands->push_back(new Command(&COMMAND_REMOVE, new string("Remove item")));
+        commands->push_back(new Command(&COMMAND_SERVE, new string("Mark served")));
         return commands;
     }
 
-    bool OrderScreen::handleCommandInput(std::string input) {
+    bool OrderScreen::handleCommandInput(string input) {
         if (input == COMMAND_ADD) {
             addOrderMenuItem();
             return true;
@@ -43,7 +44,7 @@ namespace screen {
         return false;
     }
 
-    std::string OrderScreen::getName() {
+    string OrderScreen::getName() {
         return "Order details";
     }
 
@@ -73,18 +74,18 @@ namespace screen {
         MenuItem *menuItem = nullptr;
         int userInput;
 
-        std::cout << "Select menu item from the list above: " << std::endl;
+        cout << "Select menu item from the list above: " << endl;
         while (menuItem == nullptr) {
-            std::cin >> userInput;
+            cin >> userInput;
             menuItem = MenuItemRepository::getInstance()->getById(userInput);
-            std::cout << "Please try again: ";
+            cout << "Please try again: ";
         }
 
         orderMenuItem->menuItemId = menuItem->id;
         orderMenuItem->isServed = false;
 
-        std::cout << "Qty: ";
-        std::cin >> orderMenuItem->qty;
+        cout << "Qty: ";
+        cin >> orderMenuItem->qty;
 
         OrderMenuItemRepository::getInstance()->add(orderMenuItem);
         Navigator::getInstance()->navigate(new OrderScreen(order), true);
@@ -93,13 +94,13 @@ namespace screen {
     void OrderScreen::deleteOrderMenuItem() {
         unsigned long int id;
 
-        std::cout << "Id: ";
-        std::cin >> id;
+        cout << "Id: ";
+        cin >> id;
 
         if (OrderMenuItemRepository::getInstance()->deleteById(id)) {
             Navigator::getInstance()->navigate(new OrderScreen(order), true);
         } else {
-            std::cout << "Failed to delete. Please try again." << std::endl;
+            cout << "Failed to delete. Please try again." << endl;
             deleteOrderMenuItem();
         }
     }
@@ -107,12 +108,12 @@ namespace screen {
     void OrderScreen::markOrderMenuItemServed() {
         unsigned long int id;
 
-        std::cout << "Id: ";
-        std::cin >> id;
+        cout << "Id: ";
+        cin >> id;
 
         auto orderMenuItem = OrderMenuItemRepository::getInstance()->getById(id);
         if (orderMenuItem == nullptr) {
-            std::cout << "Wrong id. Please try again." << std::endl;
+            cout << "Wrong id. Please try again." << endl;
             markOrderMenuItemServed();
             return;
         }
