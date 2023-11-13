@@ -71,51 +71,52 @@ namespace screen {
         orderMenuItem->orderId = order->id;
 
         printMenuItemsOptions();
-        MenuItem *menuItem = nullptr;
-        int userInput;
 
-        cout << "Select menu item from the list above: " << endl;
+        MenuItem *menuItem = nullptr;
+        unsigned int userInput;
+
         while (menuItem == nullptr) {
-            cin >> userInput;
+            ViewHelper::integerInput("Select menu item ID from the list above", &userInput);
             menuItem = MenuItemRepository::getInstance()->getById(userInput);
-            cout << "Please try again: ";
+            if (menuItem == nullptr) {
+                cout << "Wrong ID" << endl;
+            }
         }
 
         orderMenuItem->menuItemId = menuItem->id;
         orderMenuItem->isServed = false;
 
-        cout << "Qty: ";
-        cin >> orderMenuItem->qty;
+        ViewHelper::integerInput("Qty", &orderMenuItem->qty);
 
         OrderMenuItemRepository::getInstance()->add(orderMenuItem);
         Navigator::getInstance()->navigate(new OrderScreen(order), true);
     }
 
     void OrderScreen::deleteOrderMenuItem() {
-        unsigned long int id;
 
-        cout << "Id: ";
-        cin >> id;
-
-        if (OrderMenuItemRepository::getInstance()->deleteById(id)) {
-            Navigator::getInstance()->navigate(new OrderScreen(order), true);
-        } else {
-            cout << "Failed to delete. Please try again." << endl;
-            deleteOrderMenuItem();
+        unsigned int userInput;
+        bool deleted = false;
+        while (!deleted) {
+            ViewHelper::integerInput("Select menu item ID from the list above", &userInput);
+            deleted = OrderMenuItemRepository::getInstance()->deleteById(userInput);
+            if (deleted) {
+                Navigator::getInstance()->navigate(new OrderScreen(order), true);
+            } else {
+                cout << "Wrong ID" << endl;
+            }
         }
     }
 
     void OrderScreen::markOrderMenuItemServed() {
-        unsigned long int id;
 
-        cout << "Id: ";
-        cin >> id;
-
-        auto orderMenuItem = OrderMenuItemRepository::getInstance()->getById(id);
-        if (orderMenuItem == nullptr) {
-            cout << "Wrong id. Please try again." << endl;
-            markOrderMenuItemServed();
-            return;
+        unsigned int userInput;
+        OrderMenuItem *orderMenuItem = nullptr;
+        while (orderMenuItem == nullptr) {
+            ViewHelper::integerInput("Type in ID from the table", &userInput);
+            orderMenuItem = OrderMenuItemRepository::getInstance()->getById(userInput);
+            if (orderMenuItem == nullptr) {
+                cout << "Wrong ID" << endl;
+            }
         }
 
         orderMenuItem->isServed = true;

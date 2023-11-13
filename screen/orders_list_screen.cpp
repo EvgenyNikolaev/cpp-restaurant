@@ -113,17 +113,16 @@ namespace screen {
     }
 
     void OrdersListScreen::viewOrder() {
-        unsigned long int id;
-
-        cout << "Id: ";
-        cin >> id;
-
-        auto order = OrderRepository::getInstance()->getById(id);
-        if (order == nullptr) {
-            cout << "Wrong id. Please try again." << endl;
-            viewOrder();
-            return;
+        unsigned int userInput;
+        Order *order = nullptr;
+        while (order == nullptr) {
+            ViewHelper::integerInput("Type in ID from the table", &userInput);
+            order = OrderRepository::getInstance()->getById(userInput);
+            if (order == nullptr) {
+                cout << "Wrong ID" << endl;
+            }
         }
+
         Navigator::getInstance()->navigate(new OrderScreen(order));
     }
 

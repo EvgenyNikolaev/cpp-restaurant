@@ -27,7 +27,22 @@ namespace helper {
 
     void ViewHelper::printProperty(string property, string value) {
         cout << setw(20) << left << setfill('.') << property + ":"
-                  << setw(30) << right << setfill('.') << value << endl;
+             << setw(30) << right << setfill('.') << value << endl;
+    }
+
+    void ViewHelper::integerInput(string property, unsigned int *value) {
+        cout << property + ": ";
+        while (true) {
+            cin >> *value;
+            if (!cin) {
+                cout << "Wrong value. Please try again: " << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            } else {
+                break;
+            }
+        }
     }
 }
 

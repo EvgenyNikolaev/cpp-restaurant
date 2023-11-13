@@ -54,8 +54,7 @@ namespace screen {
         cin.ignore();
         cin.getline(menuItem->name, 32);
 
-        cout << "Price in cents: ";
-        cin >> menuItem->priceInCents;
+        ViewHelper::integerInput("Price in cents", &menuItem->priceInCents);
 
         MenuItemRepository::getInstance()->add(menuItem);
         Navigator::getInstance()->navigate(new MenuItemsScreen(), true);
@@ -63,18 +62,17 @@ namespace screen {
 
     void MenuItemsScreen::deleteMenuItem() {
 
-        unsigned long int id;
-
-        cout << "Id: ";
-        cin >> id;
-
-        if (MenuItemRepository::getInstance()->deleteById(id)) {
-            Navigator::getInstance()->navigate(new MenuItemsScreen(), true);
-        } else {
-            cout << "Failed to delete. Please try again." << endl;
-            deleteMenuItem();
+        unsigned int userInput;
+        bool deleted = false;
+        while (!deleted) {
+            ViewHelper::integerInput("Select menu item ID from the list above", &userInput);
+            deleted = MenuItemRepository::getInstance()->deleteById(userInput);
+            if (deleted) {
+                Navigator::getInstance()->navigate(new MenuItemsScreen(), true);
+            } else {
+                cout << "Wrong ID" << endl;
+            }
         }
-
     }
 
     string MenuItemsScreen::getName() {
@@ -82,16 +80,15 @@ namespace screen {
     }
 
     void MenuItemsScreen::editMenuItem() {
-        unsigned long int id;
 
-        cout << "Id: ";
-        cin >> id;
-
-        auto menuItem = MenuItemRepository::getInstance()->getById(id);
-        if (menuItem == nullptr) {
-            cout << "Wrong id. Please try again." << endl;
-            editMenuItem();
-            return;
+        unsigned int userInput;
+        MenuItem *menuItem = nullptr;
+        while (menuItem == nullptr) {
+            ViewHelper::integerInput("Type in ID from the table", &userInput);
+            menuItem = MenuItemRepository::getInstance()->getById(userInput);
+            if (menuItem == nullptr) {
+                cout << "Wrong ID" << endl;
+            }
         }
 
         cout << "Name (" << menuItem->name << "): ";
@@ -99,9 +96,7 @@ namespace screen {
         cin.getline(menuItem->name, 32);
         cout << endl;
 
-        cout << "Price (" << menuItem->priceInCents << "): ";
-        cin >> menuItem->priceInCents;
-        cout << endl;
+        ViewHelper::integerInput("Price (" + to_string(menuItem->priceInCents) + ")", &menuItem->priceInCents);
 
         MenuItemRepository::getInstance()->store();
         Navigator::getInstance()->navigate(new MenuItemsScreen(), true);

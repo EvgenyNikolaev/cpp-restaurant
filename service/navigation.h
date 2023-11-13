@@ -34,10 +34,11 @@ namespace service {
 
         vector<Screen *> *stack;
 
-        void displayCommandPrompt(Screen *screen);
+        void displayCommandPrompt(Screen *screen, bool printCommands = true);
 
         static Navigator *instance;
 
+        void printAvailableCommands(Screen *screen);
 
     public:
         Navigator();

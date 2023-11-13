@@ -7,8 +7,12 @@ namespace helper {
     class ViewHelper {
     public:
         static void printHorizontalRule();
+
         static string formatPrice(unsigned int priceInCents);
+
         static void printProperty(string property, string value);
+
+        static void integerInput(string property, unsigned int *value);
     };
 }
 

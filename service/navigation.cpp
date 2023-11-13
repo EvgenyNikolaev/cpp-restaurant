@@ -32,17 +32,12 @@ namespace service {
         putScreenOnStage(screen);
     }
 
-    void Navigator::displayCommandPrompt(Screen *screen) {
-        ViewHelper::printHorizontalRule();
-        for (auto command: *screen->getCommands()) {
-            cout << command->description->c_str() << " [" << command->command->c_str() << "]" << " | ";
+    void Navigator::displayCommandPrompt(Screen *screen, bool printCommands) {
+
+        if (printCommands) {
+            printAvailableCommands(screen);
         }
-        if (stack->size() == 1) {
-            cout << "Exit [" << COMMAND_EXIT << "]";
-        } else {
-            cout << "Go back [" << COMMAND_BACK << "]";
-        }
-        ViewHelper::printHorizontalRule();
+
         string commandInput;
         cin >> commandInput;
 
@@ -57,7 +52,7 @@ namespace service {
 
         cout << "Incorrect operation. Please try again";
         cin.ignore();
-        displayCommandPrompt(screen);
+        displayCommandPrompt(screen, false);
     }
 
     Navigator::Navigator() {
@@ -74,8 +69,21 @@ namespace service {
         displayCommandPrompt(screen);
     }
 
+    void Navigator::printAvailableCommands(Screen *screen) {
+        ViewHelper::printHorizontalRule();
+        for (auto command: *screen->getCommands()) {
+            cout << command->description->c_str() << " [" << command->command->c_str() << "]" << " | ";
+        }
+        if (stack->size() == 1) {
+            cout << "Exit [" << COMMAND_EXIT << "]";
+        } else {
+            cout << "Go back [" << COMMAND_BACK << "]";
+        }
+        ViewHelper::printHorizontalRule();
+    }
+
     Command::Command(const string *command, string *description) : description(description),
-                                                                             command(command) {
+                                                                   command(command) {
     }
 
     vector<Command *> *Screen::getCommands() {
