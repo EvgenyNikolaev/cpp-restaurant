@@ -43,12 +43,12 @@ namespace screen {
 
     std::vector<Command *> *OrdersListScreen::getCommands() {
         auto commands = new std::vector<Command *>();
-        commands->push_back(new Command(new std::string("New order [new]")));
-        commands->push_back(new Command(new std::string("View order [view]")));
-        commands->push_back(new Command(new std::string("Filter [filter]")));
-        commands->push_back(new Command(new std::string("Sort [sort]")));
-        commands->push_back(new Command(new std::string("Search [search]")));
-        commands->push_back(new Command(new std::string("Reset [reset]")));
+        commands->push_back(new Command(&COMMAND_NEW, new std::string("New order")));
+        commands->push_back(new Command(&COMMAND_VIEW, new std::string("View order")));
+        commands->push_back(new Command(&COMMAND_FILTER, new std::string("Filter")));
+        commands->push_back(new Command(&COMMAND_SORT, new std::string("Sort")));
+        commands->push_back(new Command(&COMMAND_SEARCH, new std::string("Search")));
+        commands->push_back(new Command(&COMMAND_RESET, new std::string("Reset")));
         return commands;
     }
 
@@ -74,22 +74,22 @@ namespace screen {
     }
 
     bool OrdersListScreen::handleCommandInput(std::string input) {
-        if (input == "new") {
+        if (input == COMMAND_NEW) {
             createNewOrder();
             return true;
-        } else if (input == "view") {
+        } else if (input == COMMAND_VIEW) {
             viewOrder();
             return true;
-        } else if (input == "search") {
+        } else if (input == COMMAND_SEARCH) {
             search();
             return true;
-        } else if (input == "reset") {
+        } else if (input == COMMAND_RESET) {
             reset();
             return true;
-        } else if (input == "filter") {
+        } else if (input == COMMAND_FILTER) {
             filter();
             return true;
-        } else if (input == "sort") {
+        } else if (input == COMMAND_SORT) {
             sort();
             return true;
         }
@@ -137,7 +137,7 @@ namespace screen {
 
         std::string newSearchBy;
         std::cout << "Search string: ";
-        std::cin >> newSearchBy;
+        std::getline(std::cin, newSearchBy);
 
         Navigator::getInstance()
                 ->navigate(new OrdersListScreen(&newSearchBy, this->filterBy), true);
@@ -149,7 +149,19 @@ namespace screen {
 
     void OrdersListScreen::filter() {
         FilterOption filterOption;
+        std::string selectedOption;
+        std::cout << "Selected filter by:\n";
+
+        // At the moment only one options supported
+        std::cout << "1) Not served:\n";
+        std::cin >> selectedOption;
+
+        if (selectedOption != "1") {
+            std::cout << "Wrong option.\n";
+            filter();
+        }
         filterOption = FilterOption::NOT_SERVED;
+
         Navigator::getInstance()->navigate(
                 new OrdersListScreen(this->searchBy, &filterOption, this->sortBy), true);
     }
@@ -169,6 +181,17 @@ namespace screen {
 
     void OrdersListScreen::sort() {
         SortOption sortOption;
+        std::string selectedOption;
+        std::cout << "Selected sort by:\n";
+
+        // At the moment only one options supported
+        std::cout << "1) total price (ASC):\n";
+        std::cin >> selectedOption;
+
+        if (selectedOption != "1") {
+            std::cout << "Wrong option.\n";
+            filter();
+        }
         sortOption = SortOption::TOTAL_PRICE_ASC;
 
         Navigator::getInstance()->navigate(

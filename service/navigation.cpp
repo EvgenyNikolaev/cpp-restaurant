@@ -34,7 +34,7 @@ namespace service {
     void Navigator::displayCommandPrompt(Screen *screen) {
         ViewHelper::printHorizontalRule();
         for (auto command: *screen->getCommands()) {
-            std::cout << command->description->c_str() << " | ";
+            std::cout << command->description->c_str() << " [" << command->command->c_str() << "]" << " | ";
         }
         if (stack->size() == 1) {
             std::cout << "Exit [exit]";
@@ -72,7 +72,8 @@ namespace service {
         displayCommandPrompt(screen);
     }
 
-    Command::Command(std::string *description) : description(description) {
+    Command::Command(const std::string *command, std::string *description) : description(description),
+                                                                             command(command) {
     }
 
     std::vector<Command *> *Screen::getCommands() {

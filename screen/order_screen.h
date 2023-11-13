@@ -11,6 +11,7 @@ using namespace model;
 namespace screen {
 
     class OrderScreen : public Screen {
+
     public:
         explicit OrderScreen(Order *order);
 
@@ -23,6 +24,9 @@ namespace screen {
         std::string getName() override;
 
     private:
+        constexpr static const std::string COMMAND_ADD = "add";
+        constexpr static const std::string COMMAND_REMOVE = "remove";
+        constexpr static const std::string COMMAND_SERVE = "serve";
 
         Order *order = nullptr;
 

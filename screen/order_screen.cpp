@@ -1,9 +1,7 @@
-#include <cstring>
 #include <iostream>
 #include "order_screen.h"
 #include "../repository/order_menu_item_repository.h"
 #include "../repository/menu_item_repository.h"
-#include "../model/order.h"
 #include "../helper/view_helper.h"
 #include "../service/order_service.h"
 
@@ -24,20 +22,20 @@ namespace screen {
 
     std::vector<Command *> *OrderScreen::getCommands() {
         auto commands = new std::vector<Command *>();
-        commands->push_back(new Command(new std::string("Add item [add]")));
-        commands->push_back(new Command(new std::string("Remove item [remove]")));
-        commands->push_back(new Command(new std::string("Mark served [serve]")));
+        commands->push_back(new Command(&COMMAND_ADD, new std::string("Add item")));
+        commands->push_back(new Command(&COMMAND_REMOVE, new std::string("Remove item")));
+        commands->push_back(new Command(&COMMAND_SERVE, new std::string("Mark served")));
         return commands;
     }
 
     bool OrderScreen::handleCommandInput(std::string input) {
-        if (input == "add") {
+        if (input == COMMAND_ADD) {
             addOrderMenuItem();
             return true;
-        } else if (input == "remove") {
+        } else if (input == COMMAND_REMOVE) {
             deleteOrderMenuItem();
             return true;
-        } else if (input == "serve") {
+        } else if (input == COMMAND_SERVE) {
             markOrderMenuItemServed();
             return true;
         }

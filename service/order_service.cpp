@@ -1,6 +1,5 @@
 #include "order_service.h"
 #include "../repository/order_menu_item_repository.h"
-#include "../repository/order_repository.h"
 #include "../repository/menu_item_repository.h"
 
 using namespace repository;
@@ -90,7 +89,7 @@ namespace service {
     bool OrderService::getIsFullyServed(Order *order) {
 
         auto orderMenuItems = OrderMenuItemRepository::getInstance()->getByOrderId(order->id);
-        if (orderMenuItems->size() == 0) {
+        if (orderMenuItems->empty()) {
             return false;
         }
         for (auto orderMenuItem: *orderMenuItems) {

@@ -17,6 +17,9 @@ namespace screen {
         std::string getName() override;
 
     private:
+        constexpr static const std::string COMMAND_ADD = "add";
+        constexpr static const std::string COMMAND_EDIT = "edit";
+        constexpr static const std::string COMMAND_DELETE = "delete";
 
         void printList();
 

@@ -20,10 +20,10 @@ namespace service {
 
     struct Command {
         std::string *description;
+        const std::string *command;
 
-        explicit Command(std::string *description);
+        explicit Command(const std::string *command, std::string *description);
     };
-
 
     class Navigator {
     private:

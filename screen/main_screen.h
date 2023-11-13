@@ -15,6 +15,9 @@ namespace screen {
         bool handleCommandInput(std::string input) override;
 
         std::string getName() override;
+    private:
+        constexpr static const std::string COMMAND_MENU = "menu";
+        constexpr static const std::string COMMAND_ORDERS = "orders";
     };
 }
 

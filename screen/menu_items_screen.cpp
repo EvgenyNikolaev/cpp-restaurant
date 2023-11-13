@@ -14,13 +14,13 @@ namespace screen {
     }
 
     bool MenuItemsScreen::handleCommandInput(std::string input) {
-        if (input == "add") {
+        if (input == COMMAND_ADD) {
             addMenuItem();
             return true;
-        } else if (input == "edit") {
+        } else if (input == COMMAND_EDIT) {
             editMenuItem();
             return true;
-        } else if (input == "delete") {
+        } else if (input == COMMAND_DELETE) {
             deleteMenuItem();
             return true;
         }
@@ -30,9 +30,9 @@ namespace screen {
     std::vector<Command *> *MenuItemsScreen::getCommands() {
         auto commands = Screen::getCommands();
 
-        commands->push_back(new Command(new std::string("Add [add]")));
-        commands->push_back(new Command(new std::string("Edit [edit]")));
-        commands->push_back(new Command(new std::string("Delete [delete]")));
+        commands->push_back(new Command(&COMMAND_ADD, new std::string("Add")));
+        commands->push_back(new Command(&COMMAND_EDIT, new std::string("Edit")));
+        commands->push_back(new Command(&COMMAND_DELETE, new std::string("Delete")));
         return commands;
     }
 
@@ -51,7 +51,8 @@ namespace screen {
         auto menuItem = new MenuItem();
 
         std::cout << "Name: ";
-        std::cin >> menuItem->name;
+        std::cin.ignore();
+        std::cin.getline(menuItem->name, 32);
 
         std::cout << "Price in cents: ";
         std::cin >> menuItem->priceInCents;
@@ -94,7 +95,8 @@ namespace screen {
         }
 
         std::cout << "Name (" << menuItem->name << "): ";
-        std::cin >> menuItem->name;
+        std::cin.ignore();
+        std::cin.getline(menuItem->name, 32);
         std::cout << std::endl;
 
         std::cout << "Price (" << menuItem->priceInCents << "): ";

@@ -24,6 +24,13 @@ namespace screen {
         std::string getName() override;
 
     private:
+        constexpr static const std::string COMMAND_NEW = "new";
+        constexpr static const std::string COMMAND_VIEW = "view";
+        constexpr static const std::string COMMAND_FILTER = "filter";
+        constexpr static const std::string COMMAND_SORT = "sort";
+        constexpr static const std::string COMMAND_SEARCH = "search";
+        constexpr static const std::string COMMAND_RESET = "reset";
+
 
         void printOrdersList();
 
