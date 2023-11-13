@@ -27,6 +27,8 @@ namespace service {
 
     class Navigator {
     private:
+        constexpr static const std::string COMMAND_BACK = "back";
+        constexpr static const std::string COMMAND_EXIT = "exit";
 
         std::vector<Screen *> *stack;
 

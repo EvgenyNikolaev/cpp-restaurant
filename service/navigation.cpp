@@ -37,15 +37,15 @@ namespace service {
             std::cout << command->description->c_str() << " [" << command->command->c_str() << "]" << " | ";
         }
         if (stack->size() == 1) {
-            std::cout << "Exit [exit]";
+            std::cout << "Exit [" << COMMAND_EXIT << "]";
         } else {
-            std::cout << "Go back [back]";
+            std::cout << "Go back [" << COMMAND_BACK << "]";
         }
         ViewHelper::printHorizontalRule();
         std::string commandInput;
         std::cin >> commandInput;
 
-        if (commandInput == "back" || commandInput == "exit") {
+        if (commandInput == COMMAND_BACK || commandInput == COMMAND_EXIT) {
             goBack();
             return;
         }
@@ -55,6 +55,7 @@ namespace service {
         }
 
         std::cout << "Incorrect operation. Please try again";
+        std::cin.ignore();
         displayCommandPrompt(screen);
     }
 
