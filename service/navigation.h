@@ -40,6 +40,8 @@ namespace service {
 
         void printAvailableCommands(Screen *screen);
 
+        void putScreenOnStage(Screen *screen);
+
     public:
         Navigator();
 
@@ -50,8 +52,6 @@ namespace service {
         void navigate(Screen *screen, bool replace = false);
 
         void goBack();
-
-        void putScreenOnStage(Screen *screen);
     };
 
 }

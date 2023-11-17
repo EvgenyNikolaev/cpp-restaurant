@@ -64,6 +64,7 @@ namespace screen {
             auto totalPrice = OrderService::getInstance()->getOrderTotalPrice(order);
             auto isFullyServed = OrderService::getInstance()->getIsFullyServed(order);
             auto description = OrderService::getInstance()->getDescription(order);
+            description.resize(33);
             printf("|%5lu|%12s|%33s|%30s|%20s|%6s|%6s|\n", order->id,
                    order->table,
                    description.c_str(),
@@ -137,6 +138,7 @@ namespace screen {
 
         string newSearchBy;
         cout << "Search string: ";
+        cin.ignore();
         getline(cin, newSearchBy);
 
         Navigator::getInstance()
