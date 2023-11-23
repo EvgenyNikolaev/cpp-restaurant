@@ -18,9 +18,9 @@ namespace screen {
         string getName() override;
 
     private:
-        constexpr static const string COMMAND_ADD = "add";
-        constexpr static const string COMMAND_EDIT = "edit";
-        constexpr static const string COMMAND_DELETE = "delete";
+        const string COMMAND_ADD = "add";
+        const string COMMAND_EDIT = "edit";
+        const string COMMAND_DELETE = "delete";
 
         void printList();
 

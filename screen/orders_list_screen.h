@@ -25,12 +25,12 @@ namespace screen {
         string getName() override;
 
     private:
-        constexpr static const string COMMAND_NEW = "new";
-        constexpr static const string COMMAND_VIEW = "view";
-        constexpr static const string COMMAND_FILTER = "filter";
-        constexpr static const string COMMAND_SORT = "sort";
-        constexpr static const string COMMAND_SEARCH = "search";
-        constexpr static const string COMMAND_RESET = "reset";
+        const string COMMAND_NEW = "new";
+        const string COMMAND_VIEW = "view";
+        const string COMMAND_FILTER = "filter";
+        const string COMMAND_SORT = "sort";
+        const string COMMAND_SEARCH = "search";
+        const string COMMAND_RESET = "reset";
 
 
         void printOrdersList();

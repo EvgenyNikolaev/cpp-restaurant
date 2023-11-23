@@ -25,9 +25,9 @@ namespace screen {
         string getName() override;
 
     private:
-        constexpr static const string COMMAND_ADD = "add";
-        constexpr static const string COMMAND_REMOVE = "remove";
-        constexpr static const string COMMAND_SERVE = "serve";
+        const string COMMAND_ADD = "add";
+        const string COMMAND_REMOVE = "remove";
+        const string COMMAND_SERVE = "serve";
 
         Order *order = nullptr;
 

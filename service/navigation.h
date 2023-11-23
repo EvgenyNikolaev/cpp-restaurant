@@ -29,8 +29,8 @@ namespace service {
 
     class Navigator {
     private:
-        constexpr static const string COMMAND_BACK = "back";
-        constexpr static const string COMMAND_EXIT = "exit";
+        const string COMMAND_BACK = "back";
+        const string COMMAND_EXIT = "exit";
 
         vector<Screen *> *stack;
 

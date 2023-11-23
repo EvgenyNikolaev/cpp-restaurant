@@ -17,8 +17,8 @@ namespace screen {
 
         string getName() override;
     private:
-        constexpr static const string COMMAND_MENU = "menu";
-        constexpr static const string COMMAND_ORDERS = "orders";
+        const string COMMAND_MENU = "menu";
+        const string COMMAND_ORDERS = "orders";
     };
 }
 
